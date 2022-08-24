@@ -1,0 +1,22 @@
+SYSTEM        = scf 
+    ISTART     = 0
+    LWAVE  = .TRUE.
+    LCHARG = .TRUE.
+    PREC = HIGH
+
+# Electronic Relaxation:
+    NELM       = 1000
+    LREAL      = .FALSE.
+
+# Ionic Relaxation:
+    ISYM       = 0
+    IBRION     = -1
+    NBLOCK     = 1
+    KBLOCK     = 0
+    EDIFF      = 1E-08
+
+# DOS related values:
+    ISMEAR     = -5
+
+# Miscellaneous:
+    LORBIT=11

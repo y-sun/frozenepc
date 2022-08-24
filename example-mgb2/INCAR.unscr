@@ -1,0 +1,22 @@
+SYSTEM        = unscr 
+    ISTART     = 1 
+    LWAVE  = .FALSE.
+    LCHARG = .FALSE.
+    PREC = HIGH
+
+# Electronic Relaxation:
+    NELM       = 1000
+    LREAL      = .FALSE.
+
+# Ionic Relaxation:
+    ISYM       = 0
+    IBRION     = -1
+    NBLOCK     = 1
+    KBLOCK     = 0
+    EDIFF      = 1E-08
+
+# DOS related values:
+    ISMEAR     = -2
+
+# Miscellaneous:
+    LORBIT=11

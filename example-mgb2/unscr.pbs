@@ -1,0 +1,42 @@
+#!/bin/bash
+#SBATCH -N 1
+#SBATCH -p RM-shared
+#SBATCH --ntasks-per-node=16
+#SBATCH --job-name=job
+#SBATCH -t 1:00:00
+
+VASP=/jet/home/ys3339/software/vasp.6.3.2/bin/vasp_std
+
+k="unscr"
+
+mkdir $k
+cp phonopy_disp.yaml $k
+cp INCAR.scf  INCAR.$k $k
+cp KPOINTS  POSCAR-* SPOSCAR POTCAR  $k/
+cd $k 
+
+# scf
+mkdir scf
+cp INCAR.scf scf/INCAR
+cp SPOSCAR scf/POSCAR
+cp KPOINTS POTCAR scf
+cd scf
+mpirun $VASP > vasp.scf
+cd ..
+
+# unscr
+for nj in POSCAR-*
+do
+    a=${nj#"POSCAR-"}
+    mkdir $a
+    cp INCAR.$k $a/INCAR
+    cp $nj $a/POSCAR
+    cp KPOINTS POTCAR $a
+    cd $a
+    ln -s ../scf/WAVECAR WAVECAR
+    mpirun $VASP > vasp.nscf
+    cd ..
+done
+
+# clean
+rm */WAVECAR  */CHGCAR
